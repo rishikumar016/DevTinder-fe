@@ -1,15 +1,15 @@
+import { useApi } from "@/api";
 import SwipeCards from "@/components/swip-card";
-import { useAuthStore } from "@/stores/auth-store";
 
 export const FeedPage = () => {
-  const { auth } = useAuthStore();
+  const { useFeed } = useApi();
+  const { data: feed } = useFeed();
 
-  console.log(auth.user);
+  console.log(feed);
 
   return (
     <div className="text-2xl font-bold">
-      Welcome to DevTinder, {auth.user?.firstName}!
-      <SwipeCards />
+      <SwipeCards users={feed?.users} />
     </div>
   );
 };
