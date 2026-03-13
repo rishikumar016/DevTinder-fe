@@ -3,6 +3,7 @@ import { Calendar, Mail, Mars, Venus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import type { User } from "@/types/user";
 import { useApi } from "@/api";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface ConnectionRequest {
   _id: string;
@@ -42,11 +43,13 @@ export const RequestCard = ({ request }: RequestCardProps) => {
   return (
     <Card className="transition-all duration-200 hover:shadow-lg">
       <CardContent className="flex items-start gap-4 px-4 sm:px-6">
-        <img
-          src={user?.avatar ?? undefined}
-          alt="User Avatar"
-          className="w-16 h-16 rounded-full"
-        />
+        <Avatar>
+          <AvatarImage src={user?.avatar ?? undefined} />
+          <AvatarFallback>
+            {user.firstName?.charAt(0)}
+            {user.lastName?.charAt(0)}
+          </AvatarFallback>
+        </Avatar>
 
         <div className="flex-1 space-y-1.5">
           <div className="flex flex-wrap items-center gap-2">
@@ -89,13 +92,16 @@ export const RequestCard = ({ request }: RequestCardProps) => {
 
         <div className="flex gap-2 pt-2">
           <Button
-            variant="ghost"
-            className="border border-border/60 px-4 text-foreground hover:bg-muted"
+            variant="outline"
+            className="px-5 cursor-pointer"
             onClick={() => handleReject(request._id)}
           >
             Ignore
           </Button>
-          <Button className="px-5" onClick={() => handleAccept(request._id)}>
+          <Button
+            className="px-5 cursor-pointer"
+            onClick={() => handleAccept(request._id)}
+          >
             Accept
           </Button>
         </div>
