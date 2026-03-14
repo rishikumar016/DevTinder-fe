@@ -5,7 +5,13 @@ import type { User } from "@/types/user";
 type FeedUser = User & { _id: string };
 
 interface FeedResponse {
-  users: FeedUser[];
+  data: FeedUser[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+  };
 }
 
 const feedApi = {
