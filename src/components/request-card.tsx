@@ -1,21 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Calendar, Mail, Mars, Venus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import type { User } from "@/types/user";
+import type { Connection } from "@/types/request-user";
 import { useApi } from "@/api";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-interface ConnectionRequest {
-  _id: string;
-  sender: User;
-  receiver: string;
-  status: "interested" | "ignored" | "accepted" | "rejected";
-  createdAt: string;
-  updatedAt: string;
-}
-
 interface RequestCardProps {
-  request: ConnectionRequest;
+  request: Connection;
 }
 
 export const RequestCard = ({ request }: RequestCardProps) => {

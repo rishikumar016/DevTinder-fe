@@ -1,11 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "./auth";
+import type {
+  SendConnectionStatus,
+  RespondConnectionAction,
+} from "@/types/request-user";
 
 const connectionsApi = {
-  sendConnectionRequest: (status: string, userId: string) => {
+  sendConnectionRequest: (status: SendConnectionStatus, userId: string) => {
     return apiClient.post(`/connection/send/${status}/${userId}`);
   },
-  respondToConnectionRequest: (requestId: string, action: string) => {
+  respondToConnectionRequest: (
+    requestId: string,
+    action: RespondConnectionAction,
+  ) => {
     return apiClient.post(`/connection/respond/${requestId}/${action}`);
   },
 };
@@ -16,8 +23,13 @@ export function useConnectionsHooks() {
   return {
     useSendConnectionRequest: () => {
       return useMutation({
-        mutationFn: ({ status, userId }: { status: string; userId: string }) =>
-          connectionsApi.sendConnectionRequest(status, userId),
+        mutationFn: ({
+          status,
+          userId,
+        }: {
+          status: SendConnectionStatus;
+          userId: string;
+        }) => connectionsApi.sendConnectionRequest(status, userId),
       });
     },
     useRespondToConnectionRequest: () => {
@@ -27,7 +39,7 @@ export function useConnectionsHooks() {
           action,
         }: {
           requestId: string;
-          action: string;
+          action: RespondConnectionAction;
         }) => connectionsApi.respondToConnectionRequest(requestId, action),
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ["receivedRequests"] });

@@ -1,21 +1,21 @@
 import type { User } from "./user";
 
-interface Connection {
+export type ConnectionStatus =
+  | "pending"
+  | "interested"
+  | "ignored"
+  | "accepted"
+  | "rejected"
+  | "blocked";
+
+export type SendConnectionStatus = "interested" | "ignored";
+export type RespondConnectionAction = "accepted" | "rejected" | "blocked";
+
+export interface Connection {
   _id: string;
   sender: User;
   receiver: string;
-  status: "interested" | "accepted" | "rejected" | "pending";
+  status: ConnectionStatus;
   createdAt: string;
   updatedAt: string;
-  __v: number;
-}
-
-interface ConnectionWithDates {
-  _id: string;
-  sender: User;
-  receiver: string;
-  status: "interested" | "accepted" | "rejected" | "pending";
-  createdAt: Date;
-  updatedAt: Date;
-  __v: number;
 }
